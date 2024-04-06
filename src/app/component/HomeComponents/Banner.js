@@ -1,13 +1,16 @@
 "use client"
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styles from "./Banner.module.css";
+import { Context } from "../MyLayout";
 
 const Banner = (props) => {
-    
-    const [show, setShow] = useState(false);
 
+    const [show, setShow] = useState(false);
+    
+    const { value } = useContext(Context);
+    
     const handleOver = ()=> {
         return props?.title?.length >= 30 ? setShow(prev => !prev) : null;
     }
@@ -16,7 +19,7 @@ const Banner = (props) => {
   return (
     <section className={styles.bannerSection} style={{"backgroundImage":`url(${props?.cover})`,"width":"100%", "minHeight":"60vh", "position":"relative"}}>
     <div className={styles.glassEffect}>
-       <Link className={styles.link} href={`/song/${props?.id}`}>
+       <Link className={styles.link} href={`/${value.top}/${props?.id}`}>
            <h3>
                {props?.title?.length >= 30 ? `${props?.title?.slice(0, 25)}...`: props?.title}
                {show && 

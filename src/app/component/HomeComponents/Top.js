@@ -4,63 +4,18 @@ import Circle from "./Circle";
 import { useContext, useEffect, useState } from "react";
 import styles from "./Top.module.css";
 import PopularSong from "./Popular";
-import { Context } from "../../page";
-
-const data = [
-    {
-        "id": "E8QyH2ZibAIkXHCpgTcL",
-        "cover": "https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Bella-Shmurda-%E2%80%93-My-Brother-Tribute-To-Mohbad-Lyrics.webp?alt=media&token=09bbc456-25b5-4da4-a6eb-e4168bf20d96",
-        "title": "My Brother (Tribute To Mohbad)",
-        "artistImage": "https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Bella-Shmurda-%E2%80%93-My-Brother-Tribute-To-Mohbad-Lyrics.webp?alt=media&token=09bbc456-25b5-4da4-a6eb-e4168bf20d96",
-        "artistName": "Bella Shmurda",
-        "timePosted": 3,
-        "category": "songs"
-      }, {
-        "id": "HEMBsoZwbAWq4d0KuYQs",
-        "cover": "https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Kizz-Daniel-%E2%80%93-Twe-Twe.webp?alt=media&token=04731bda-d9b8-4297-a604-b1cb736c294a",
-        "title": "Kizz Daniel – Twe Twe",
-        "artistImage": "https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Kizz-Daniel-%E2%80%93-Twe-Twe.webp?alt=media&token=04731bda-d9b8-4297-a604-b1cb736c294a",
-        "artistName": "Kizz Daniel",
-        "timePosted": 3,
-        "category": "songs"
-    },{
-      "id": "IzECy5FNaOWsL7jostt3",
-      "cover": "https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Fireboy-DML-%E2%80%93-Outside-And-Obaa-Sima.webp?alt=media&token=a324b439-87c0-43db-8ce9-e6ad28edbc8e",
-      "title": "Fireboy DML – Obaa Sima",
-      "artistImage": "https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Fireboy-DML-%E2%80%93-Outside-And-Obaa-Sima.webp?alt=media&token=a324b439-87c0-43db-8ce9-e6ad28edbc8e",
-      "artistName": "Fireboy",
-      "timePosted": 3,
-      "category": "songs"
-  },{
-    "id": "JHZfhgeGuS3Fm99Q9uVJ",
-    "cover": "https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Teni-%E2%80%93-One-Day.webp?alt=media&token=24deefbe-4030-487b-9938-ff65ec3acca4",
-    "title": "One day",
-    "artistImage": "https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Teni-%E2%80%93-One-Day.webp?alt=media&token=24deefbe-4030-487b-9938-ff65ec3acca4",
-    "artistName": "Teni",
-    "timePosted": 3,
-    "category": "songs"
-}
-]
+import { Context } from "../MyLayout";
+import Loader from "@/app/loading";
 
 const Top = ()=>{
   const [number, setNumber] = useState(0);
+  const [bannerLoading, setBannerLoading] = useState(true);
+  const [popularLoading, setPopularLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [popularData, setPopularData] = useState([]);
+  const { value } = useContext(Context);
 
-  // const context = useContext(Context);
-  // console.log(context)
-//   const context = App.createContextHook;
-//   const Context = useContext(context);
-//   const category = Context.category;
- 
-//   const Data = Context.realData;
-  
-//   const DataToDisplay = ()=>{
-//     const arr = [];
-//     for(let i = 0; i < 6; i++){
-//       arr.push(Data[i])
-//     }
-//     return arr;
-//   }
-  
+    console.log(data)
     useEffect(()=>{
         const timeId = setTimeout(()=>{
           setNumber(prev =>{
@@ -75,7 +30,30 @@ const Top = ()=>{
         
       },[number])
       
-      const innerHtml = data.map((data)=>{
+      useEffect(()=> {
+        const fetchData = async () => {
+          const response = await fetch(`/api/banner/${value.top}`);
+          // console.log(`/api/banner/${value.top}`)
+          const res = await response.json();
+          console.log(res)
+          setBannerLoading(false);
+          setData(res);
+        }
+        fetchData()
+      }, [value.top])
+
+      useEffect(()=> {
+        const fetchData = async () => {
+          const response = await fetch(`/api/popular/${value.top}`);
+          const res = await response.json();
+          setPopularLoading(false);
+          setPopularData(res);
+        }
+        fetchData()
+      }, [value.top])
+
+
+      const innerHtml = data?.map((data)=>{
         // console.log(data)
         return <Banner 
           key={data?.id} 
@@ -108,71 +86,28 @@ const Top = ()=>{
     return(
         <main className={styles.container} >
             <div>
-              {innerHtml[number]}
+              {bannerLoading ? <Loader /> : innerHtml[number] }
             </div>
             <div className={styles.circleContainer} >
                 {circle}
             </div>
-            <PopularSong 
-              category="songs"
-              id="r0wlUTJXP0yZHCZyEayj"
-              banner="https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Burna-Boy-20-10-20-1.webp?alt=media&token=e7cd8d05-64c8-482d-8b55-bcf66af46c78"
-              name="Burna Boy"
-              title="20 10 20"
-              time="5"
-            />
-             <PopularSong 
-              category="songs"
-              id="r0wlUTJXP0yZHCZyEayj"
-              banner="https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Burna-Boy-20-10-20-1.webp?alt=media&token=e7cd8d05-64c8-482d-8b55-bcf66af46c78"
-              name="Burna Boy"
-              title="20 10 20"
-              time="5"
-            />
-             <PopularSong 
-              category="songs"
-              id="r0wlUTJXP0yZHCZyEayj"
-              banner="https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Burna-Boy-20-10-20-1.webp?alt=media&token=e7cd8d05-64c8-482d-8b55-bcf66af46c78"
-              name="Burna Boy"
-              title="20 10 20"
-              time="5"
-            />
-             <PopularSong 
-              category="songs"
-              id="r0wlUTJXP0yZHCZyEayj"
-              banner="https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Burna-Boy-20-10-20-1.webp?alt=media&token=e7cd8d05-64c8-482d-8b55-bcf66af46c78"
-              name="Burna Boy"
-              title="20 10 20"
-              time="5"
-            />
-             <PopularSong 
-              category="songs"
-              id="r0wlUTJXP0yZHCZyEayj"
-              banner="https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Burna-Boy-20-10-20-1.webp?alt=media&token=e7cd8d05-64c8-482d-8b55-bcf66af46c78"
-              name="Burna Boy"
-              title="20 10 20"
-              time="5"
-            />
-             <PopularSong 
-              category="songs"
-              id="r0wlUTJXP0yZHCZyEayj"
-              banner="https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Burna-Boy-20-10-20-1.webp?alt=media&token=e7cd8d05-64c8-482d-8b55-bcf66af46c78"
-              name="Burna Boy"
-              title="20 10 20"
-              time="5"
-            />
+            {
+              popularLoading ? <Loader /> :
+              popularData.map(datum =>(
+                <PopularSong 
+                  key={datum.id}
+                  category={datum.category}
+                  id={datum.id}
+                  banner={datum.banner}
+                  name={datum.name}
+                  title={datum.title}
+                  time={datum.time}
+                />
+              ))
+            }
+            
         </main>
     )
 }
 
 export default Top;
-
-// {
-//   "category": "songs",
-//   "id": "r0wlUTJXP0yZHCZyEayj",
-//   "banner": "https://firebasestorage.googleapis.com/v0/b/fir-basics-9aa01.appspot.com/o/Burna-Boy-20-10-20-1.webp?alt=media&token=e7cd8d05-64c8-482d-8b55-bcf66af46c78",
-//   "name": "Burna Boy",
-//   "title": "20 10 20",
-//   "time": 5,
-//   "darkMode": "dark"
-// }

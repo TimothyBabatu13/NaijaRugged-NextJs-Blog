@@ -1,12 +1,16 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Popular.module.css";
+import { Context } from "../MyLayout";
+import { useContext } from "react";
 const PopularSong = (props)=>{
-    // console.log(props)
-    // console.log(props)
+    
+    const { value } = useContext(Context);
+
     return(
         <div className={styles.songListContainer}>
-            <Link onClick={props.handleNavigate} href={`/song/${props.id}`}><Image className={styles.image} height={90} width={90} src={props.banner} alt="song banner" /></Link>
+            <Link onClick={props.handleNavigate} href={`/${value.top}/${props.id}`}><Image className={styles.image} height={90} width={90} src={props.banner} alt="song banner" /></Link>
             <div>
                
                <Link className={styles.songListSecondA} href={`/song/${props.id}`}>{props.name} - {props.title}</Link>
