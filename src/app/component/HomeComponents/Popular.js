@@ -5,7 +5,7 @@ import styles from "./Popular.module.css";
 import { Context } from "../MyLayout";
 import { useContext } from "react";
 const PopularSong = (props)=>{
-    
+    // console.log(props)
     const { value } = useContext(Context);
 
     return(

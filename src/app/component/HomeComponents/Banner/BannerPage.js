@@ -1,21 +1,18 @@
-"use client"
-import Banner from "./Banner/Banner";
-import Circle from "./Banner/Circle"
-import { useContext, useEffect, useState } from "react";
-import styles from "./Top.module.css";
-import PopularSong from "./Popular";
-import { Context } from "../MyLayout";
+import { Context } from "../../MyLayout";
+import Banner from "./Banner";
+import Circle from "./Circle";
+import { useState, useEffect, useContext } from "react";
 import Loader from "@/app/loading";
+import styles from "./BannerPage.module.css"
 
-const Top = ()=>{
-  const [number, setNumber] = useState(0);
+
+const BannerPage = () => {
+     const [number, setNumber] = useState(0);
   const [bannerLoading, setBannerLoading] = useState(true);
-  const [popularLoading, setPopularLoading] = useState(true);
-  const [data, setData] = useState([]);
-  const [popularData, setPopularData] = useState([]);
-  const { value } = useContext(Context);
+   const [data, setData] = useState([]);
 
-    // console.log(data)
+   const { value } = useContext(Context);
+      console.log(data)
     useEffect(()=>{
         const timeId = setTimeout(()=>{
           setNumber(prev =>{
@@ -42,18 +39,7 @@ const Top = ()=>{
         fetchData()
       }, [value.top])
 
-      useEffect(()=> {
-        const fetchData = async () => {
-          const response = await fetch(`/api/popular/${value.top}`);
-          const res = await response.json();
-          setPopularLoading(false);
-          setPopularData(res);
-        }
-        fetchData()
-      }, [value.top])
-
-
-      const innerHtml = data?.map((data)=>{
+          const innerHtml = data?.map((data)=>{
         // console.log(data)
         return <Banner 
           key={data?.id} 
@@ -82,32 +68,16 @@ const Top = ()=>{
         />
       ))
 
-      
-    return(
-        <main className={styles.container} >
-            <div>
+  return (
+    <>
+    <div>
               {bannerLoading ? <Loader /> : innerHtml[number] }
             </div>
             <div className={styles.circleContainer} >
                 {circle}
             </div>
-            {
-              popularLoading ? <Loader /> :
-              popularData.map(datum =>(
-                <PopularSong 
-                  key={datum.id}
-                  category={datum.category}
-                  id={datum.id}
-                  banner={datum.banner}
-                  name={datum.name}
-                  title={datum.title}
-                  time={datum.time}
-                />
-              ))
-            }
-            
-        </main>
-    )
+    </>
+  )
 }
 
-export default Top;
+export default BannerPage

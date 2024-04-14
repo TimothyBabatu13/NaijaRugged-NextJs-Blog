@@ -25,7 +25,7 @@ export const GET = async (response) => {
     });
     
 
-    console.log(newData)
+    // console.log(newData)
 
 
     return NextResponse.json(newData);

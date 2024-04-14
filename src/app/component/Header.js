@@ -85,12 +85,12 @@ const Header = () => {
                     value={text}
                     ref={ref}
                 />
-                <img 
+                {/* <img 
                     // onClick={handleSubmit} 
                     // style={{position:"absolute", "right":"10px", "top":"5px", "cursor":"pointer"}} 
                     // src={searchIcon} 
                     // alt="searchIcon" 
-                />
+                /> */}
             </div>
             <div className={styles.headerBtn} >
             {/* className="header--btn--container" */}
