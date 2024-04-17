@@ -24,7 +24,7 @@ export async function generateMetadata({params}, parent) {
 const page =  async ({params}) => {
 
   const {slug, id} = params;
-  const data = await getData(`http://localhost:3000/api/${slug}/${id}`);
+  const data = await getData(`vercel.app/api/${slug}/${id}`);
   // console.log(data)
   if(!data){
     return <h1>Loading...</h1>
