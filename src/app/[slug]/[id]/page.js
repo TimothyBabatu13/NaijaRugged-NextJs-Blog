@@ -13,7 +13,7 @@ const getData = async (url) => {
 
 export async function generateMetadata({params}, parent) {
   const {slug, id} = params;
-  const data = await getData(`http://localhost:3000/api/${slug}/${id}`);
+  const data = await getData(`vercel.app/api/${slug}/${id}`);
   return {
     title: `${data?.author}-${data?.title}`,
     description: data?.desc,
