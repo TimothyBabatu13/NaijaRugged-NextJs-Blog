@@ -13,7 +13,7 @@ const getData = async (url) => {
 
 export async function generateMetadata({params}, parent) {
   const {slug, id} = params;
-  const data = await getData(`vercel.app/api/${slug}/${id}`);
+  const data = await getData(`https://naija-rugged-next-js-blog-six.vercel.app/api/${slug}/${id}`);
   return {
     title: `${data?.author}-${data?.title}`,
     description: data?.desc,
@@ -24,7 +24,7 @@ export async function generateMetadata({params}, parent) {
 const page =  async ({params}) => {
 
   const {slug, id} = params;
-  const data = await getData(`vercel.app/api/${slug}/${id}`);
+  const data = await getData(`https://naija-rugged-next-js-blog-six.vercel.app/api/${slug}/${id}`);
   // console.log(data)
   if(!data){
     return <h1>Loading...</h1>
