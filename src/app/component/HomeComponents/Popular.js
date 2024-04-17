@@ -13,7 +13,7 @@ const PopularSong = (props)=>{
             <Link onClick={props.handleNavigate} href={`/${value.top}/${props.id}`}><Image className={styles.image} height={90} width={90} src={props.banner} alt="song banner" /></Link>
             <div>
                
-               <Link className={styles.songListSecondA} href={`/song/${props.id}`}>{props.name} - {props.title}</Link>
+               <Link className={styles.songListSecondA} href={`/${value.top}/${props.id}`}>{props.name} - {props.title}</Link>
                <div className={styles.detailsContainer} >
                 <div className={styles.timePosted} >
                     <p>&#128345;</p>
