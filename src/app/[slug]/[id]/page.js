@@ -39,7 +39,7 @@ export async function generateMetadata({params}, parent) {
       siteName: "NaijaRugged",
       images: [
         {
-          url: data?.src,
+          url: data?.img,
           width: 800,
           height: 800
         },
