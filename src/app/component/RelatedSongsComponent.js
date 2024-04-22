@@ -10,7 +10,7 @@ const getData = async (url) => {
   
 const RelatedSongsComponent = async ({ name, id, slug }) => {
   
-  const isDev = true;
+  const isDev = false;
   const baseURL = isDev  ? "http://localhost:3000" : "https://naija-rugged-next-js-blog-six.vercel.app";
   const data = await getData(`${baseURL}/api/related/${slug}/${id}?query=${name.split(" ")[0]}`);
 
