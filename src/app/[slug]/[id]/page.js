@@ -16,7 +16,7 @@ const getData = async (url) => {
 
 export async function generateMetadata({params}, parent) {
   const {slug, id} = params;
-  const isDev = true;
+  const isDev = false;
   const baseURL = isDev  ? "http://localhost:3000" : "https://naija-rugged-next-js-blog-six.vercel.app"
   const data = await getData(`${baseURL}/api/${slug}/${id}`);
 
@@ -56,7 +56,7 @@ const page =  async ({params}) => {
 
   const {slug, id} = params;
 
-  const isDev = true;
+  const isDev = false;
   const baseURL = isDev  ? "http://localhost:3000" : "https://naija-rugged-next-js-blog-six.vercel.app"
   const data = await getData(`${baseURL}/api/${slug}/${id}`);
 
