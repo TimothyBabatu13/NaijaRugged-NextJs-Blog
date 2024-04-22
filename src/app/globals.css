@@ -1,0 +1,13 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: white;
+}
+body {
+  background: #2f2f2f;
+  color: white;
+}
+a{
+  text-decoration: none;
+}
