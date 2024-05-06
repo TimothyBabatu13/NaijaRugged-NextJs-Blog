@@ -14,14 +14,16 @@ export const GET = async (response) => {
 
     const querySnapshot = await getDocs(collection(db, neededWord));
 
-    querySnapshot.forEach((doc) => {
-        newData.push({
+    querySnapshot.forEach((doc, id) => {
+        if(id < 6){
+            newData.push({
             cover: doc.data().img,
             title: doc.data().title,
             artistImage: doc.data().img,
             artistName: doc.data().author,
             id: doc.id
         })
+        }
     });
     
 
