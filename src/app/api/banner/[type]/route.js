@@ -11,7 +11,7 @@ export const GET = async (response) => {
     const lastName = pathname.split("/");
     const neededWord = lastName[lastName.length - 1];
     const newData = [];
-
+    const dataToReturn = [];
     const querySnapshot = await getDocs(collection(db, neededWord));
 
     querySnapshot.forEach((doc, id) => {
@@ -25,11 +25,13 @@ export const GET = async (response) => {
         })
         // }
     });
+
+    for(let i = 0; i < newData.length; i++){
+        if(i > 5) break;
+        dataToReturn.push(newData[i]);
+    }
     
 
-    // console.log(newData)
-
-
-    return NextResponse.json(newData);
+    return NextResponse.json(dataToReturn);
 }
 
