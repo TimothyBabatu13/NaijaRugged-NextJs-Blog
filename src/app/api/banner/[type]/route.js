@@ -15,7 +15,7 @@ export const GET = async (response) => {
     const querySnapshot = await getDocs(collection(db, neededWord));
 
     querySnapshot.forEach((doc, id) => {
-        if(id < 6){
+        // if(id < 6){
             newData.push({
             cover: doc.data().img,
             title: doc.data().title,
@@ -23,7 +23,7 @@ export const GET = async (response) => {
             artistName: doc.data().author,
             id: doc.id
         })
-        }
+        // }
     });
     
 
